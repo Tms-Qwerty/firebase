@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-// import { Router } from "@reach/router";
+import { Router } from "@reach/router";
 import { useSelector, useDispatch } from "react-redux";
 
 import Profile from "./components/Profile/Profile";
-
-// import PasswordReset from "./components/PasswordReset/PasswordReset";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
+import PasswordReset from "./components/PasswordReset/PasswordReset";
 
 import { auth, generateUserDocument } from "./Firebase/firebase";
 import { setUser, selectUser } from "./Firebase/firebaseSlice";
 
 import "./App.css";
-import { Login } from "./components/SignIn/register";
 
 const App = () => {
   const user = useSelector(selectUser);
@@ -26,7 +26,15 @@ const App = () => {
     });
   }, [dispatch]);
 
-  return user ? <Profile /> : <Login />;
+  return user ? (
+    <Profile />
+  ) : (
+    <Router>
+      <SignIn path="/" />
+      <SignUp path="signUp" />
+      <PasswordReset path="passwordReset" />
+    </Router>
+  );
 };
 
 export default App;
